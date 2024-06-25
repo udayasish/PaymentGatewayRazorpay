@@ -35,5 +35,3 @@ build/
 tmp/
 temp/
 
-# .ejs file templates
-*.ejs
