@@ -38,19 +38,44 @@ const registerUser = asyncHandler(async (req, res) => {
     petroleumName,
   });
 
-  //Check for successful user creation and remove password and refresh token field from response
-  const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
+  const createdUser = await User.findById(user._id).select("-password");
 
-  // Redirect to payment page
   res.status(200).redirect(`/payment/checkout/${user._id}`);
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  //Login functionalities
+  const { username, email, password } = req.body;
 
-  return res.status(200).json({ success: "Logged In Successfull" });
+  if (!username || !email) {
+    return res.render("login", {
+      error: "Both username and email are required",
+    });
+  }
+
+  const user = await User.findOne({
+    $and: [{ username }, { email }],
+  });
+
+  if (!user) {
+    return res.render("login", { error: "Invalid username or email" });
+  }
+
+  const isPasswordValid = await user.isPasswordCorrect(password);
+
+  if (!isPasswordValid) {
+    return res.render("login", { error: "Invalid credentials" });
+  }
+
+  if (!user.paymentStatus) {
+    return res.redirect(`/payment/checkout/${user._id}`);
+  }
+
+  const loggedInUser = await User.findById(user._id).select("-password");
+
+  res.json({
+    success: "User logged in successfully",
+    user: loggedInUser,
+  });
 });
 
 export { showRegisterPage, registerUser, showLoginPage, loginUser };
