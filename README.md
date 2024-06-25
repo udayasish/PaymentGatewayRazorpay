@@ -1,0 +1,1 @@
+This project demonstrates the integration of Razorpay for processing payments within a web application. The frontend is implemented using EJS (Embedded JavaScript) templates and TailwindCSS, while MongoDB is utilized to store user information and payment details. The project aims to provide a seamless payment experience, ensuring secure and reliable transactions.
