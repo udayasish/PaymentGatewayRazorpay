@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     
-    "dev": "NODE_ENV=production node index.js",
+    "dev": "node --env-file=.env index.js",
     "style": "npx tailwindcss -i ./public/styles/input.css -o ./public/styles/output.css --watch"
   },
   "keywords": [],

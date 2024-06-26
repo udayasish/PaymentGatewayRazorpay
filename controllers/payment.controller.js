@@ -28,7 +28,7 @@ export const checkout = asyncHandler(async (req, res) => {
 
     res.render("payment", { order, userId, error });
   } catch (error) {
-    throw new ApiError(501, "Error creating Razorpay order");
+    res.render("login", { error: "Payment is not working at this moment!!" });
   }
 });
 
@@ -69,9 +69,7 @@ export const paymentVerification = asyncHandler(async (req, res) => {
 
       res.render("redirecting", { user_id });
     } else {
-      res.status(401).json({
-        message: "Payment verification failed",
-      });
+      res.render("login", { error: "Payment is not working at this moment!!" });
     }
   } catch (error) {
     res.status(500).json({
