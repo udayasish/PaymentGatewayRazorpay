@@ -14,7 +14,8 @@ router.get("/register", showRegisterPage);
 // Route to handle registration form submission
 router.post("/register", registerUser);
 
-router.get("/login/:userId", showLoginPage);
+// router.get("/login/:userId", showLoginPage);
+router.get("/login", showLoginPage);
 router.post("/login", loginUser);
 
 export default router;
